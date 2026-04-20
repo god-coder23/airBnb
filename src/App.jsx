@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Components/Navbar/Navbar'
-import Destination from './Components/Navbar/Destination'
+import Footer from './Components/Footer/Footer'
 
 const App = () => {
   return (
@@ -8,6 +8,7 @@ const App = () => {
       <Navbar />
       <div className='h-screen w-screen '>
       </div>
+      <Footer />
     </div>
   )
 }
