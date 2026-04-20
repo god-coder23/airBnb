@@ -1,13 +1,15 @@
 import React from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Footer from './Components/Footer/Footer'
+import PropertyGrid from './components/PropertyGrid/PropertyGrid';
 
 const App = () => {
   return (
-    <div>
+    <div className="app">
       <Navbar />
-      <div className='h-screen w-screen '>
-      </div>
+      <main className="main-content">
+        <PropertyGrid />
+      </main>
       <Footer />
     </div>
   )
