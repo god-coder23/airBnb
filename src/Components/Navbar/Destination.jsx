@@ -177,7 +177,7 @@ const Destination = () => {
   ))
   return (
     <div className='pl-[22%] -mt-2 load'>
-        <div className=' shadow-md shadow-black/20 w-[35%] h-100 rounded-4xl overflow-y-auto'>
+        <div className=' shadow-md shadow-black/20 border-b backdrop-blur-xs border-white/40 w-[35%] h-100 rounded-4xl overflow-y-auto'>
             <div className='pl-10 pt-6'>
                 <h1 className='text-[10px] text-gray-700'>Suggested destinations</h1>
             </div>
