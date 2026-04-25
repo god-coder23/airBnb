@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import Footer from './Components/Footer/Footer'
-import PropertyGrid from './components/PropertyGrid/PropertyGrid';
+import PropertyGrid from './Components/PropertyGrid/PropertyGrid';
 
 const App = () => {
   return (

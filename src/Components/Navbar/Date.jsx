@@ -32,8 +32,9 @@ const Date = () => {
         setWeekendActive(true)
     }
   return (
-    <div className='pl-[30%] -mt-2'>
-        <div className='w-[65%] h-80 rounded-3xl shadow-lg shadow-black/15 flex flex-row gap-10 load'>
+    <div className='mt-4 absolute w-full z-50 flex justify-center pointer-events-none'>
+      <div className='w-[55%] flex justify-center pointer-events-auto'>
+        <div className='w-fit pr-10 h-80 rounded-3xl shadow-lg shadow-black/15 flex flex-row gap-10 load bg-white'>
             <div>
                 <div className='p-5 flex flex-col gap-5'>
                     <div onClick={isTodayActive} className={`border rounded-xl pl-4 p-5 ${TodayActive ? "border-2 border-black bg-black/2" : "border-black/20"}`}>
@@ -59,6 +60,7 @@ const Date = () => {
                 />
             </div>
         </div>
+      </div>
     </div>
   )
 }

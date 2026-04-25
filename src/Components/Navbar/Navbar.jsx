@@ -1,4 +1,4 @@
-import React, { use, useRef, useState } from 'react'
+import React, { use, useRef, useState, useEffect } from 'react'
 import { Earth, Menu, Search } from 'lucide-react'
 import Destination from './Destination';
 import Date from './Date';
@@ -30,6 +30,23 @@ const Navbar = () => {
     );
   }
 }, [isScrolled]);
+
+  const searchContainerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setActiveDest(false);
+        setActiveDate(false);
+        setActiveGuest(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const [activeHome, setActiveHome] = useState(true)
   const [activeExp, setActiveExp] = React.useState(false);
   const [activeServices, setactiveServices] = React.useState(false);
@@ -73,7 +90,7 @@ const Navbar = () => {
     setActiveGuest(true)
   }
   return (
-    <div ref={navRef} className='w-screen flex flex-col flex lg:flex-col lg:gap-5'>
+    <div ref={navRef} className='w-screen flex flex-col flex lg:flex-col lg:gap-5 relative z-50 bg-white'>
           <div className='justify-between flex flex-col lg:flex-row p-12 lg:pt-2 items-center'>
             <div className='flex flex-row gap-1'>
               <div className='h-7 w-7 flex items-center justify-center'>
@@ -113,45 +130,20 @@ const Navbar = () => {
                 </div>
             </div>
         </div>
-        <div className='navbar'>
-         {!isScrolled && (
-           <div className='flex justify-center items-center'>
-            <div className='w-[55%] backdrop:blur-2xl h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
-              <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${isActiveDest ? "" : ""}`}>
-                <h1 className='text-[10px]'>Where</h1>
-                <input className='text-[10px] text-gray-600 font-light outline-none' placeholder='Search Destinations' />
-              </div>
-              <div onClick={isActiveDate} className='flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/206 w-1/3  border-black/20'>
-                <h1 className='text-[10px]'>When</h1>
-                <h1 className='text-[10px] text-gray-600 font-light'>Add Dates</h1>
-              </div>
-              <div onClick={isActiveGuest} className='flex flex-row items-center flex-1 h-full rounded-4xl hover:bg-black/5 pl-6 pr-2 pt-7 pb-7'>
-                  <div className='flex flex-col flex-1 justify-center'>
-                    <h1 className='text-[10px]'>Who</h1>
-                    <h1 className='text-[10px] text-gray-600 font-light'>Add guests</h1>
-                  </div>
-                  <div className="pr-2">
-                    <div className="p-3 bg-red-500 rounded-full flex items-center justify-center">
-                      <Search size={16} color="white" />
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-         )}
-         {isScrolled && (
-          <div className='smallnav'>
-            <div className='flex justify-center items-center mt-10 '>
-              <div className='w-[30%] h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
-                <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${isActiveDest ? "" : ""}`}>
+        <div ref={searchContainerRef}>
+          <div className='navbar'>
+           {!isScrolled && (
+             <div className='flex justify-center items-center'>
+              <div className='w-[55%] backdrop:blur-2xl h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
+                <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${activeDest ? "bg-white shadow-md border-transparent" : ""}`}>
                   <h1 className='text-[10px]'>Where</h1>
-                  <input className='text-[10px] text-gray-600 font-light outline-none' placeholder='Search Destinations' />
+                  <input className='text-[10px] text-gray-600 font-light outline-none bg-transparent' placeholder='Search Destinations' />
                 </div>
-                <div onClick={isActiveDate} className='flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/206 w-1/3  border-black/20'>
+                <div onClick={isActiveDate} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none w-1/3  border-black/20 ${activeDate ? "bg-white shadow-md border-transparent" : ""}`}>
                   <h1 className='text-[10px]'>When</h1>
                   <h1 className='text-[10px] text-gray-600 font-light'>Add Dates</h1>
                 </div>
-                <div onClick={isActiveGuest} className='flex flex-row items-center flex-1 h-full rounded-4xl hover:bg-black/5 pl-6 pr-2 pt-7 pb-7'>
+                <div onClick={isActiveGuest} className={`flex flex-row items-center flex-1 h-full rounded-4xl hover:bg-black/5 pl-6 pr-2 pt-7 pb-7 ${activeGuest ? "bg-white shadow-md border-transparent" : ""}`}>
                     <div className='flex flex-col flex-1 justify-center'>
                       <h1 className='text-[10px]'>Who</h1>
                       <h1 className='text-[10px] text-gray-600 font-light'>Add guests</h1>
@@ -164,12 +156,39 @@ const Navbar = () => {
                   </div>
               </div>
             </div>
+           )}
+           {isScrolled && (
+            <div className='smallnav'>
+              <div className='flex justify-center items-center mt-10 '>
+                <div className='w-[30%] h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
+                  <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${activeDest ? "bg-white shadow-md border-transparent" : ""}`}>
+                    <h1 className='text-[10px]'>Where</h1>
+                    <input className='text-[10px] text-gray-600 font-light outline-none bg-transparent' placeholder='Search Destinations' />
+                  </div>
+                  <div onClick={isActiveDate} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none w-1/3  border-black/20 ${activeDate ? "bg-white shadow-md border-transparent" : ""}`}>
+                    <h1 className='text-[10px]'>When</h1>
+                    <h1 className='text-[10px] text-gray-600 font-light'>Add Dates</h1>
+                  </div>
+                  <div onClick={isActiveGuest} className={`flex flex-row items-center flex-1 h-full rounded-4xl hover:bg-black/5 pl-6 pr-2 pt-7 pb-7 ${activeGuest ? "bg-white shadow-md border-transparent" : ""}`}>
+                      <div className='flex flex-col flex-1 justify-center'>
+                        <h1 className='text-[10px]'>Who</h1>
+                        <h1 className='text-[10px] text-gray-600 font-light'>Add guests</h1>
+                      </div>
+                      <div className="pr-2">
+                        <div className="p-3 bg-red-500 rounded-full flex items-center justify-center">
+                          <Search size={16} color="white" />
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+           )}
           </div>
-         )}
+          {activeDest && <Destination />}
+          {activeDate && <Date />}
+          {activeGuest && <Guests />}
         </div>
-        {activeDest && <Destination />}
-        {activeDate && <Date />}
-        {activeGuest && <Guests />}
     </div>
   )
 }

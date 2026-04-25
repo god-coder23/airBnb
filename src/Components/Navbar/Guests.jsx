@@ -39,8 +39,9 @@ const Guests = () => {
         }
     }
   return (
-    <div className='pl-[50%] -mt-2 h-screen w-screen load select-none'>
-      <div className='w-[54%] shadow-lg shadow-black/20 rounded-3xl h-60'>
+    <div className='mt-4 load select-none absolute w-full z-50 flex justify-center pointer-events-none'>
+      <div className='w-[55%] flex justify-end pointer-events-auto'>
+        <div className='w-[400px] shadow-lg shadow-black/20 rounded-3xl h-60 bg-white'>
         <div className='p-7 flex flex-col gap-5'>
             <div className='flex flex-row justify-between border-b border-black/10'>
                 <div className='flex flex-col pb-5'>
@@ -94,6 +95,7 @@ const Guests = () => {
                 </div>
             </div>
         </div>
+      </div>
       </div>
     </div>
   )
