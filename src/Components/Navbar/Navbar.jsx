@@ -3,6 +3,7 @@ import { Earth, Menu, Search } from 'lucide-react'
 import Destination from './Destination';
 import Date from './Date';
 import Guests from './Guests';
+import LanguageModal from './LanguageModal';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from '@gsap/react';
@@ -32,6 +33,7 @@ const Navbar = () => {
 }, [isScrolled]);
 
   const searchContainerRef = useRef(null);
+  const profileMenuRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -39,6 +41,9 @@ const Navbar = () => {
         setActiveDest(false);
         setActiveDate(false);
         setActiveGuest(false);
+      }
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setActiveProfileMenu(false);
       }
     }
     
@@ -54,6 +59,9 @@ const Navbar = () => {
   const [activeDate, setActiveDate] = React.useState(false);
   const [activeGuest, setActiveGuest] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [activeProfileMenu, setActiveProfileMenu] = React.useState(false);
+  const [isLangModalOpen, setIsLangModalOpen] = React.useState(false);
+  
   const isActiveHome = () => {
     setActiveHome(true)
     setactiveServices(false)
@@ -121,14 +129,30 @@ const Navbar = () => {
                     <h1 className='text-xs'>Services</h1>
                   </div>
             </div>
-            <div className='flex flex-row gap-4 items-center'>
+            <div className='flex flex-row gap-4 items-center relative' ref={profileMenuRef}>
                 <h1 className='text-xs'>Become a host</h1>
-                <div className='bg-black/10 rounded-full p-2'>
+                <div 
+                  className='bg-black/10 rounded-full p-2 cursor-pointer hover:bg-black/20 transition-colors'
+                  onClick={() => setIsLangModalOpen(true)}
+                >
                   <Earth size={13} strokeWidth={2} />
                 </div>
-                <div className='bg-black/10 rounded-full p-2'>
+                <div onClick={() => setActiveProfileMenu(!activeProfileMenu)} className='bg-black/10 rounded-full p-2 cursor-pointer hover:shadow-md transition-shadow'>
                   <Menu size={13} strokeWidth={2} />
                 </div>
+
+                {activeProfileMenu && (
+                  <div className='absolute right-0 top-12 w-60 bg-white rounded-xl shadow-lg shadow-black/20 border border-black/10 py-2 z-[100] flex flex-col'>
+                    <div className='flex flex-col border-b border-black/10 pb-2 mb-2'>
+                      <div className='px-4 py-3 hover:bg-black/5 cursor-pointer text-sm font-semibold'>Sign up</div>
+                      <div className='px-4 py-3 hover:bg-black/5 cursor-pointer text-sm'>Log in</div>
+                    </div>
+                    <div className='flex flex-col'>
+                      <div className='px-4 py-3 hover:bg-black/5 cursor-pointer text-sm'>Airbnb your home</div>
+                      <div className='px-4 py-3 hover:bg-black/5 cursor-pointer text-sm'>Help Centre</div>
+                    </div>
+                  </div>
+                )}
             </div>
         </div>
         <div ref={searchContainerRef}>
@@ -200,6 +224,9 @@ const Navbar = () => {
           {activeDate && <Date />}
           {activeGuest && <Guests />}
         </div>
+
+        {/* Language Modal */}
+        {isLangModalOpen && <LanguageModal onClose={() => setIsLangModalOpen(false)} />}
     </div>
   )
 }
