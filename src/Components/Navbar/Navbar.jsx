@@ -53,6 +53,7 @@ const Navbar = () => {
   const [activeDest, setActiveDest] = React.useState(false);
   const [activeDate, setActiveDate] = React.useState(false);
   const [activeGuest, setActiveGuest] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
   const isActiveHome = () => {
     setActiveHome(true)
     setactiveServices(false)
@@ -137,7 +138,12 @@ const Navbar = () => {
               <div className='w-[55%] backdrop:blur-2xl h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
                 <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${activeDest ? "bg-white shadow-md border-transparent" : ""}`}>
                   <h1 className='text-[10px]'>Where</h1>
-                  <input className='text-[10px] text-gray-600 font-light outline-none bg-transparent' placeholder='Search Destinations' />
+                  <input 
+                    className='text-[10px] text-gray-600 font-light outline-none bg-transparent' 
+                    placeholder='Search Destinations' 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
                 <div onClick={isActiveDate} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none w-1/3  border-black/20 ${activeDate ? "bg-white shadow-md border-transparent" : ""}`}>
                   <h1 className='text-[10px]'>When</h1>
@@ -163,7 +169,12 @@ const Navbar = () => {
                 <div className='w-[30%] h-14 pt-1 pb-1 flex justify-start content-center items-center -mt-14  border border-black/10 shadow-lg shadow-black/10 rounded-4xl'>
                   <div onClick={isActiveDest} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none border-black/20 ${activeDest ? "bg-white shadow-md border-transparent" : ""}`}>
                     <h1 className='text-[10px]'>Where</h1>
-                    <input className='text-[10px] text-gray-600 font-light outline-none bg-transparent' placeholder='Search Destinations' />
+                    <input 
+                      className='text-[10px] text-gray-600 font-light outline-none bg-transparent' 
+                      placeholder='Search Destinations' 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                   <div onClick={isActiveDate} className={`flex flex-col pr-6 pl-6 pt-7 pb-7 hover:bg-black/5 h-full flex-1 justify-center rounded-4xl hover:w-100 hover:border-none w-1/3  border-black/20 ${activeDate ? "bg-white shadow-md border-transparent" : ""}`}>
                     <h1 className='text-[10px]'>When</h1>
@@ -185,7 +196,7 @@ const Navbar = () => {
             </div>
            )}
           </div>
-          {activeDest && <Destination />}
+          {activeDest && <Destination searchQuery={searchQuery} />}
           {activeDate && <Date />}
           {activeGuest && <Guests />}
         </div>

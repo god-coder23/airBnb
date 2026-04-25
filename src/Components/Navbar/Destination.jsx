@@ -26,7 +26,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
-const Destination = () => {
+const Destination = ({ searchQuery }) => {
   const data = [
     {
       title: "Nearby",
@@ -169,6 +169,14 @@ const Destination = () => {
       logoColor: "#fb923c"
     }
   ];
+
+  const filteredData = (searchQuery || "").trim() === ""
+    ? data
+    : data.filter(item =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
   useGSAP(() => (
     gsap.from(".load", {
       x: 100,
@@ -183,19 +191,23 @@ const Destination = () => {
           <h1 className='text-[10px] text-gray-700'>Suggested destinations</h1>
         </div>
         <div className='pl-10 pt-2 flex flex-col gap-3'>
-          {data.map((item, idx) => (
-            <div key={idx} className='flex gap-2'>
-              <div className={`${item.bgColor} w-fit rounded-lg`}>
-                <div className='p-3'>
-                  <item.logo className='' size={18} color={item.logoColor} strokeWidth={1.5} />
+          {filteredData.length > 0 ? (
+            filteredData.map((item, idx) => (
+              <div key={idx} className='flex gap-2 cursor-pointer hover:bg-black/5 p-2 -ml-2 rounded-lg transition-colors'>
+                <div className={`${item.bgColor} w-fit rounded-lg`}>
+                  <div className='p-3'>
+                    <item.logo className='' size={18} color={item.logoColor} strokeWidth={1.5} />
+                  </div>
+                </div>
+                <div className='flex flex-col justify-center'>
+                  <h1 className=' text-xs'>{item.title}</h1>
+                  <h1 className='text-[11px] text-olive-500'>{item.description}</h1>
                 </div>
               </div>
-              <div className='flex flex-col justify-center'>
-                <h1 className=' text-xs'>{item.title}</h1>
-                <h1 className='text-[11px] text-olive-500'>{item.description}</h1>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className='text-xs text-gray-500 py-4'>No destinations found.</div>
+          )}
         </div>
       </div>
       </div>
